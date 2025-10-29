@@ -73,16 +73,22 @@ function updateScores() {
     console.log('Player Hand Value:', playerHandValue);
 };
 
+function checkBust() {
+    if (playerHandValue > 21) { 
+        console.log('Player Busts!');
+        gameActive = false;
+    }};
+
 function startGame() {
     gameActive = true;
     deck = shuffleDeck(createDeck());
+    console.log('Game Started');
     dealerHand.push(deck.pop());
     playerHand.push(deck.pop());
     dealerHand.push(deck.pop()); //to be hidden later
     playerHand.push(deck.pop());
     updateHands();
     updateScores();
-    console.log('Game Started');
     console.log('Dealer Hand:', dealerHand);
     console.log('Player Hand:', playerHand);
 };
@@ -90,17 +96,25 @@ function startGame() {
 function nextRound() {
     dealerHand = [];
     playerHand = [];
+    playerHandValue = 0;
+    dealerHandValue = 0;
     startGame();
 };
 
 const btn = document.getElementById('action');
-btn.addEventListener('click', function() {
-    if (!gameActive) {
+btn.addEventListener('click', function()
+
+{
+    if (btn.textContent === 'Next Round'){
+        nextRound();
+        };
+
+    
+    if (btn.textContent === 'Start') {
         startGame();
         btn.textContent = 'Next Round';
-    } else {
-        nextRound();
-    }
+    } 
+    
 });
 
 
@@ -110,7 +124,10 @@ hitButton.addEventListener('click', function() {
         playerHand.push(deck.pop());
         updateHands();
         updateScores();
-        console.log('Player hits');
+        checkBust();
+        if (!gameActive) {
+            console.log('Dealer Wins!');
+        }else console.log('Player hits');
         console.log('Player Hand:', playerHand);
     }
 });
@@ -126,6 +143,13 @@ stickButton.addEventListener('click', function() {
         updateScores();
         console.log('Player sticks');
         console.log('Dealer Hand:', dealerHand);
+        if (dealerHandValue > 21 || playerHandValue > dealerHandValue) {
+            console.log('Player Wins!');
+        } else if (playerHandValue < dealerHandValue) {
+            console.log('Dealer Wins!');
+        } else {
+            console.log('Draw!');
+        }
         gameActive = false;
     }
 });
