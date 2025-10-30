@@ -4,8 +4,12 @@ let playerHandValue = 0;
 let dealerHand = [];
 let playerHand = [];
 let gameActive = false;
+let revealDealerCard = false;
 
 let deck = createDeck();
+
+const dealerHandDiv = document.getElementById('dealer-hand');
+const playerHandDiv = document.getElementById('player-hand');
 
 
 function createDeck() {
@@ -15,7 +19,7 @@ function createDeck() {
     
     for (let suit of suits) {
         for (let value of values) {
-            deck.push({ suit: suit, value: value });
+            deck.push({ value: value, suit: suit });
         }
     }
     
@@ -76,17 +80,53 @@ function updateScores() {
 function checkBust() {
     if (playerHandValue > 21) { 
         console.log('Player Busts!');
+        revealDealerCard = true;
+        renderHand();
         gameActive = false;
     }};
+
+function renderHand() {
+    if (gameActive) {
+        dealerHandDiv.innerHTML = '';
+dealerHand.forEach((card, index) => {
+    const cardImg = document.createElement('img');
+
+    // If it's the second card and we're not revealing yet
+    if (index === 1 && !revealDealerCard) {
+        cardImg.src = 'Cards/Back-2.png'; // your card back image
+    } else {
+        cardImg.src = `Cards/${card.value}-${card.suit}.png`;
+    }
+
+    cardImg.alt = 'Dealer card';
+    cardImg.className = 'card';
+    dealerHandDiv.appendChild(cardImg);
+});
+
+        playerHandDiv.innerHTML = '';
+        for (let card of playerHand) {
+            const cardImg = document.createElement('img');
+            cardImg.src = `Cards/${card.value}-${card.suit}.png`;
+            cardImg.alt = 'Player card';
+            cardImg.className = 'card';
+            playerHandDiv.appendChild(cardImg);
+        }
+    }};
+    
 
 function startGame() {
     gameActive = true;
     deck = shuffleDeck(createDeck());
     console.log('Game Started');
+    const card = deck.pop();
+    dealerHand.push(card);
+    renderHand();
+    playerHand.push(deck.pop());
+    renderHand();
     dealerHand.push(deck.pop());
+    renderHand(); //to be hidden later
     playerHand.push(deck.pop());
-    dealerHand.push(deck.pop()); //to be hidden later
-    playerHand.push(deck.pop());
+    renderHand();
     updateHands();
     updateScores();
     console.log('Dealer Hand:', dealerHand);
@@ -106,6 +146,7 @@ btn.addEventListener('click', function()
 
 {
     if (btn.textContent === 'Next Round'){
+        revealDealerCard = false;
         nextRound();
         };
 
@@ -114,6 +155,11 @@ btn.addEventListener('click', function()
         startGame();
         btn.textContent = 'Next Round';
     } 
+
+    if (document.getElementById('Round-message').textContent !== '') {
+        document.getElementById('Round-message').textContent = ''};
+
+    
     
 });
 
@@ -122,11 +168,14 @@ const hitButton = document.getElementById('hit-button');
 hitButton.addEventListener('click', function() {
     if (gameActive) {
         playerHand.push(deck.pop());
+        renderHand();
         updateHands();
         updateScores();
         checkBust();
         if (!gameActive) {
             console.log('Dealer Wins!');
+            const roundMessage = document.getElementById('Round-message');
+            roundMessage.textContent = 'Dealer Wins!';
         }else console.log('Player hits');
         console.log('Player Hand:', playerHand);
     }
@@ -135,9 +184,12 @@ hitButton.addEventListener('click', function() {
 const stickButton = document.getElementById('stick-button');
 stickButton.addEventListener('click', function() {
     if (gameActive) {
+        revealDealerCard = true;
+        renderHand();
         // Dealer's turn logic here
         while (calculateHandValue(dealerHand) < 17) {
             dealerHand.push(deck.pop());
+            renderHand();
         }
         updateHands();
         updateScores();
@@ -145,10 +197,16 @@ stickButton.addEventListener('click', function() {
         console.log('Dealer Hand:', dealerHand);
         if (dealerHandValue > 21 || playerHandValue > dealerHandValue) {
             console.log('Player Wins!');
+            const roundMessage = document.getElementById('Round-message');
+            roundMessage.textContent = 'Player Wins!';
         } else if (playerHandValue < dealerHandValue) {
             console.log('Dealer Wins!');
+            const roundMessage = document.getElementById('Round-message');
+            roundMessage.textContent = 'Dealer Wins!';
         } else {
             console.log('Draw!');
+            const roundMessage = document.getElementById('Round-message');
+            roundMessage.textContent = 'Draw!';
         }
         gameActive = false;
     }
