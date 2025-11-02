@@ -10,6 +10,8 @@ let deck = createDeck();
 
 const dealerHandDiv = document.getElementById('dealer-hand');
 const playerHandDiv = document.getElementById('player-hand');
+const playerValueP = document.getElementById('player-value');
+const dealerValueP = document.getElementById('dealer-value');
 
 
 function createDeck() {
@@ -70,6 +72,10 @@ function updateHands() {
     const playerHandDiv = document.getElementById('player-hand');
 };
 
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function updateScores() {
     dealerHandValue = calculateHandValue(dealerHand);
     playerHandValue = calculateHandValue(playerHand);
@@ -82,6 +88,7 @@ function checkBust() {
         console.log('Player Busts!');
         revealDealerCard = true;
         renderHand();
+        dealerValueP.textContent = `Dealer Value: ${calculateHandValue(dealerHand)}`;
         gameActive = false;
     }};
 
@@ -114,19 +121,26 @@ dealerHand.forEach((card, index) => {
     }};
     
 
-function startGame() {
+async function startGame() {
     gameActive = true;
     deck = shuffleDeck(createDeck());
     console.log('Game Started');
     const card = deck.pop();
     dealerHand.push(card);
+    await delay(500);
     renderHand();
+    dealerValueP.textContent = `Dealer Value: ${calculateHandValue(dealerHand)}`;
     playerHand.push(deck.pop());
+    await delay(500);
     renderHand();
+    playerValueP.textContent = `Player Value: ${calculateHandValue(playerHand)}`;
     dealerHand.push(deck.pop());
+    await delay(500);
     renderHand(); //to be hidden later
     playerHand.push(deck.pop());
+    await delay(500);
     renderHand();
+    playerValueP.textContent = `Player Value: ${calculateHandValue(playerHand)}`;
     updateHands();
     updateScores();
     console.log('Dealer Hand:', dealerHand);
@@ -165,12 +179,14 @@ btn.addEventListener('click', function()
 
 
 const hitButton = document.getElementById('hit-button');
-hitButton.addEventListener('click', function() {
+hitButton.addEventListener('click', async function() {
     if (gameActive) {
         playerHand.push(deck.pop());
+        await delay(500);
         renderHand();
         updateHands();
         updateScores();
+        playerValueP.textContent = `Player Value: ${calculateHandValue(playerHand)}`;
         checkBust();
         if (!gameActive) {
             console.log('Dealer Wins!');
@@ -182,14 +198,17 @@ hitButton.addEventListener('click', function() {
 });
 
 const stickButton = document.getElementById('stick-button');
-stickButton.addEventListener('click', function() {
+stickButton.addEventListener('click', async function() {
     if (gameActive) {
         revealDealerCard = true;
         renderHand();
+        dealerValueP.textContent = `Dealer Value: ${calculateHandValue(dealerHand)}`;
         // Dealer's turn logic here
         while (calculateHandValue(dealerHand) < 17) {
             dealerHand.push(deck.pop());
+            await delay(500);
             renderHand();
+            dealerValueP.textContent = `Dealer Value: ${calculateHandValue(dealerHand)}`;
         }
         updateHands();
         updateScores();
