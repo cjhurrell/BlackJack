@@ -1,14 +1,22 @@
 {
   "name": "blackjack",
   "version": "1.0.0",
-  "description": "BJ for Desktop and Mobile",
-  "main": "BJ.js",
+  "description": "Desktop Blackjack game",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cjhurrell/BlackJack.git"
+  },
+  "build": {
+    "appId": "com.yourname.blackjack",
+    "publish": [
+      {
+        "provider": "github"
+      }
+    ]
   },
   "keywords": [],
   "author": "",
@@ -16,5 +24,10 @@
   "bugs": {
     "url": "https://github.com/cjhurrell/BlackJack/issues"
   },
-  "homepage": "https://github.com/cjhurrell/BlackJack#readme"
+  "homepage": "https://github.com/cjhurrell/BlackJack#readme",
+  "devDependencies": {
+    "electron": "^32.0.0",
+    "electron-builder": "^25.0.0",
+    "electron-updater": "^6.3.0"
+  }
 }
