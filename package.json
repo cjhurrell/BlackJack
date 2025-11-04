@@ -8,10 +8,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cjhurrell/BlackJack.git"
+    "url": "https://github.com/cjhurrell/BlackJack.git"
   },
   "build": {
-    "appId": "com.yourname.blackjack",
+    "appId": "com.cjhurrell.blackjack",
+    "productName": "Blackjack",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
     "publish": [
       {
         "provider": "github"
@@ -19,15 +27,15 @@
     ]
   },
   "keywords": [],
-  "author": "",
+  "author": "HACK",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cjhurrell/BlackJack/issues"
   },
   "homepage": "https://github.com/cjhurrell/BlackJack#readme",
   "devDependencies": {
-    "electron": "^32.0.0",
-    "electron-builder": "^25.0.0",
+    "electron": "^39.0.0",
+    "electron-builder": "^25.1.8",
     "electron-updater": "^6.3.0"
   }
 }
