@@ -19,7 +19,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "Cards/A-S"
+      "icon": "Cards/Logo.ico"
     },
     "publish": [
       {
