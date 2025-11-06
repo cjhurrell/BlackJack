@@ -22,19 +22,14 @@
       "icon": "Cards/Logo.ico"
     },
     "nsis": {
-    "oneClick": false,            
-    "allowToChangeInstallationDirectory": true,
-    "createDesktopShortcut": true, 
-    "createStartMenuShortcut": true,
-    "shortcutName": "Blackjack"
+      "oneClick": false,            
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true, 
+      "createStartMenuShortcut": true,
+      "shortcutName": "Blackjack"
   }
-}
-    "publish": [
-      {
-        "provider": "github"
-      }
-    ]
-  },
+},
+
   "keywords": [],
   "author": "HACK",
   "license": "ISC",
@@ -48,5 +43,10 @@
   "devDependencies": {
     "electron": "^39.0.0",
     "electron-builder": "^25.1.8"
-  }
+  },
+    "publish": [
+      {
+        "provider": "github"
+      }
+    ]
 }
