@@ -34,9 +34,11 @@
     "url": "https://github.com/cjhurrell/BlackJack/issues"
   },
   "homepage": "https://github.com/cjhurrell/BlackJack#readme",
+  "dependencies": {
+    "electron-updater": "^6.6.2"
+  },
   "devDependencies": {
     "electron": "^39.0.0",
-    "electron-builder": "^25.1.8",
-    "electron-updater": "^6.6.2"
+    "electron-builder": "^25.1.8"
   }
 }
