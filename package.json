@@ -21,6 +21,14 @@
       "target": "nsis",
       "icon": "Cards/Logo.ico"
     },
+    "nsis": {
+    "oneClick": false,            
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true, 
+    "createStartMenuShortcut": true,
+    "shortcutName": "Blackjack"
+  }
+}
     "publish": [
       {
         "provider": "github"
