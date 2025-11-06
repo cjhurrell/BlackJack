@@ -1,4 +1,8 @@
-const { app, BrowserWindow, autoUpdater } = require('electron');
+const { app, BrowserWindow } = require('electron');
+const { autoUpdater } = require('electron-updater'); // ← correct import
+const path = require('path');
+
+let mainWindow;
 
 function createWindow() {
   const win = new BrowserWindow({
