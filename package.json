@@ -46,7 +46,9 @@
   },
     "publish": [
       {
-        "provider": "github"
+        "provider": "github",
+        "owner": "cjhurrell",
+    "repo": "BlackJack"
       }
     ]
 }
